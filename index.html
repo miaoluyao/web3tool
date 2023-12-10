@@ -1,0 +1,490 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data</title>
+    <link rel="stylesheet" href="style/css/bootstrap.min.css">
+    <script src="style/js/jquery.min.js"></script>
+    <script src="style/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
+    <script src="abi/abi.js" type="text/javascript" charset="utf-8"></script> 
+    <script src="abi/getpairs.js" type="text/javascript" charset="utf-8"></script> 
+    <script src="abi/nftAbi.js" type="text/javascript" charset="utf-8"></script>
+    
+    <style>
+        .row{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container" style="width: 600px;">
+            <div class="row" style="text-align: center">
+                    <h1> DATA</h1>
+                </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input class="btn btn-primary btn-block" type="submit" value="登录" id="login" onclick="login()">
+            </div>
+        </div>
+        
+        
+  
+
+    </div> 
+
+
+
+    <div class="container" style="width: 600px;margin-top: 10px">
+        
+         
+
+        
+        
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="address_from">你的地址</label>
+                        <span></span>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="address_from" placeholder="你的地址" disabled >
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+     
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="contract_address">合约地址</label>
+                        <span></span>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="contract_address" placeholder="合约地址" >
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="contract_address">方法名</label>
+                        <span></span>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="fname" placeholder="fun()" >
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+        
+
+        
+        <div class="container" style="width: 600px;margin-top: 10px" id="balanceforblind"> </div>
+        
+      
+      
+        
+        
+        
+         <div class="row">
+                <div class="col-md-12">                   
+                    <input class="btn btn-primary btn-block" type="submit" value="获取参数" onclick="fun()" >
+                </div>
+        </div>
+        
+        <div id="data"></div>
+        
+         <div class="row">
+                <div class="col-md-12">                   
+                    <input class="btn btn-primary btn-block" type="submit" value="write" onclick="writeC()" >
+                </div>
+        </div>
+        
+         <div class="row">
+                <div class="col-md-12">                   
+                    <input class="btn btn-primary btn-block" type="submit" value="read"  onclick="read()" >
+                </div>
+        </div>
+        
+        
+        
+        
+
+        <div class="container" style="width: 600px;margin-top: 10px" id="send-tx"> </div>
+        <div class="container" style="width: 600px;margin-top: 10px" id="read-tx"> </div>
+
+        
+     
+     <div class="row">
+            <div class="col-md-12">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="typesArray">typesArray</label>
+                        <span></span>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="typesArray" value='["uint256"]'>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="hexString">hexString</label>
+                        <span></span>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="hexString" value="0x00000000000000000000000000000000000000000000021e19e0c9bab2400000">
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+        <div class="row">
+                <div class="col-md-12">                   
+                    <input class="btn btn-primary btn-block" type="submit" value="decodeParameters"  onclick="decodeParameters()" >
+                </div>
+        </div>
+         <div class="container" style="width: 600px;margin-top: 10px" id="hexStringTo"> </div>
+        
+        <!--<div class="row">-->
+        <!--    <div class="col-md-12">-->
+        <!--            <div class="form-group form-group-sm">-->
+        <!--                <label class="col-sm-2 control-label" for="hexString">16进制</label>-->
+        <!--                <span></span>-->
+        <!--                <div class="col-sm-10">-->
+        <!--                    <input class="form-control" type="text" id="hex" value="">-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--    </div>-->
+        <!--</div>-->
+        
+        <!--<div class="row">-->
+        <!--        <div class="col-md-12">                   -->
+        <!--            <input class="btn btn-primary btn-block" type="submit" value="16进制转10进制"  onclick="hexToInt()" >-->
+        <!--        </div>-->
+        <!--</div>-->
+        
+        
+    </div>
+
+        <!--<div class="container" style="width: 600px;margin-top: 10px" id="account-list">-->
+        <!--</div>-->
+
+    <script>
+    const desiredNetwork = '56';
+    var web3 = new Web3();
+    
+
+    var okt_t_e ="https://www.oklink.com/okexchain-test/";
+    
+    var ropsten_e = "https://ropsten.etherscan.io/";
+    var rinkeby_e = "https://rinkeby.etherscan.io/";
+    var bsc_e ="https://bscscan.com/" 
+    
+    const desiredNetwork_16 = '0x3';
+    login();
+    
+
+    
+
+     async function login(){
+         
+            console.log('login')
+            
+            
+            if (typeof window.ethereum.isMetaMask === 'undefined') {
+              alert('看起来您需要一个 Dapp 浏览器才能开始使用。')
+              alert('请安装 MetaMask！')
+            }else{
+              ethereum.request({ method: 'eth_requestAccounts' }).catch(function (reason) {
+                      
+                   if (reason.code == 4001 ) {
+                        alert('请同意连接 MetaMask,才能继续使用！');
+                        return;
+                    } else {
+                      alert('哦！NO, 好像发生了点意外。别着急, 我们很快修复它')
+                      return;
+                    }
+                    
+                  }).then(function (accounts) {
+                      console.log('account',accounts)
+                    
+                    // if (ethereum.networkVersion !== desiredNetwork) {
+                    //     var switch_status = switchEthereumChain(desiredNetwork_16).then(result=>{
+                    //      console.log(result);
+                    // })
+                    // }abi
+    
+                    const account = accounts[0]
+                    //alert('登录成功');
+                    // console.log("success");
+                    $("#login-address").html("账户地址"+account);
+                    $("#address_from").val(account);
+                    $("#balance_address").val(account);
+                    $("#login").val("已登录");
+                  
+                    
+                    // var _provider = _detectEthereumProvider().then(result=>{
+                    //      console.log("provider");
+                    //      console.log(result); 
+                    //       if (result !== window.ethereum) {
+                    //     console.error('Do you have multiple wallets installed?');
+                    //   }else{
+                    //      provider = result;
+                    //   }
+                      
+                    // });
+                  console.log(window.ethereum); 
+                   
+                   
+                  })
+            }
+        }
+        
+    
+     async function read(){
+         
+             var contract_address = $("#contract_address").val();
+            var address_from = $("#address_from").val();
+        //     var data =$("#data").val();
+            var data = datasha3();
+              
+                if(!address_from){
+                  alert("请先连接钱包");
+                  return false;
+              }
+              console.log(data);
+    
+                var eth_read = eth_call(contract_address , address_from , data).then(result=>{
+                    console.log(result);
+                    $("#read-tx").html(result); 
+                    $("#hexString").val(result); 
+                    
+                  
+                })
+            //console.log(web3.utils.toDecimal(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff))
+              
+        }
+        
+      async function writeC(){
+    	     
+    	     
+    	    var contract_address = $("#contract_address").val();
+            var address_from = $("#address_from").val();
+        //     var data =$("#data").val();
+            var data = datasha3();
+            
+            if(!address_from){
+                alert("请先连接钱包");
+                return false;
+              }
+              
+            console.log(data);
+                
+             var eth_write = eth_sendTransaction(contract_address , address_from , data).then(txHash=>{
+                console.log(txHash);
+                $("#send-tx").html("交易哈希TX："+ bsc_e +"tx/" + txHash);
+            })
+        }
+        
+    function fun(){
+        //alert(1);
+        var fname = $("#fname").val();
+        var re = /\([^\)]+\)/g;
+        fname = fname.match(re)[0];
+        fname = fname.substring(1,fname.length-1);
+        var fundata =fname.split(",");
+        $('.datadiv').remove();
+        for(var index in fundata){  
+                //console.log(index+"参数是"+fundata[index]);  
+            $('#data').before("<div class='row datadiv'><div class='col-md-12'><div class='form-group form-group-sm'><label class='col-sm-2 control-label'>"+fundata[index]+ "</label><span></span><div class='col-sm-10'><input class='form-control datainput' type='text' id='data"+ index +"' data-for='"+ fundata[index] +"'></div></div></div></div>");
+    } 
+
+    }
+    
+    function datasha3(){
+        var dlength = $(".datainput").length;
+        var fname = $("#fname").val();
+        var data = web3.utils.sha3(fname).substring(0,10);
+        
+        if(dlength > 0){
+            var re = /\([^\)]+\)/g;
+            fname = fname.match(re)[0];
+            fname = fname.substring(1,fname.length-1);
+            var fundata =fname.split(",");
+            console.log(fundata);
+            for(i = 0 ; i < dlength; i++){
+                
+                var date_start = $("#data"+i).val();
+                var data_att = fundata[i];
+                console.log(date_start)
+                console.log(data_att)
+                // alert(date_start);
+                // alert(data_att);
+                
+
+        
+                if(data_att == "address"){
+                   date_end = web3.eth.abi.encodeParameter('address', date_start);
+                   date_end = padLeft(date_end.substring(2));
+                   
+                }else if( data_att == "uint256"){
+                    date_end = web3.eth.abi.encodeParameter('uint256', date_start);
+                    date_end = padLeft(date_end.substring(2));
+                    
+                }else if( data_att == "bool"){
+                    date_end = web3.eth.abi.encodeParameter('uint256', date_start);
+                    date_end = padLeft(date_end.substring(2));
+                    
+                }else if(data_att == "string"){
+                    date_end = web3.eth.abi.encodeParameter('string', date_start);
+                    date_end = padLeft(date_end.substring(2));
+                }else if(data_att == "address[]"){
+                    date_end = web3.eth.abi.encodeParameter('address[]', JSON.parse(date_start));
+                    date_end = padLeft(date_end.substring(2));
+                }else if(data_att == "uint256[]"){
+                    date_end = web3.eth.abi.encodeParameter('uint256[]', JSON.parse(date_start));
+                    date_end = padLeft(date_end.substring(2));
+                }else if(data_att == "bool[]"){
+                    date_end = web3.eth.abi.encodeParameter('bool[]', JSON.parse(date_start));
+                    date_end = padLeft(date_end.substring(2));
+                }
+                console.log(date_end)
+                
+                data = data + date_end;
+            }
+        }
+        
+        return data;
+    }
+    
+    
+    async function decodeParameters(){
+      
+       //console.log(nftAbi);
+        var hexString = $("#hexString").val();
+       
+        var typesArray = $("#typesArray").val();
+         typesArray = JSON.parse(typesArray);
+        console.log(typesArray);
+        console.log(hexString);
+        var result = web3.eth.abi.decodeParameters(typesArray, hexString);
+
+        $("#hexStringTo").empty();
+         $.each(result, function(key, value) {
+          $('#hexStringTo').append($('<p>').text(key + ': ' + value));
+        });
+        console.log(result);
+
+        
+    }
+    
+    function toHex(toHex_value){
+        return web3.utils.toHex(toHex_value); 
+    }
+        
+    function padLeft(oldvalue){
+       return web3.utils.padLeft(oldvalue, 64);
+    }
+    
+    function utf8ToHex(string){
+       return web3.utils.utf8ToHex(string);
+    }
+        //         // 参数补齐64位
+        // function changeDecimalBuZero(str, length){
+            
+        //     str = str.slice(2);
+        //     // if(str.substring(0, 2) == "0x"){}
+        //   return (Array(length).join('0') + str).slice(-length);  
+           
+        // }
+        
+        
+
+		async function eth_call(contract_address,address_from,data){
+		    
+            try {
+              var eth_call = await ethereum.request({
+                method: 'eth_call',
+                params: [
+                  {
+                    "from": address_from,
+                    "to": contract_address,
+                    "data": data,
+                  
+                },"latest"]
+
+              });
+              
+             return eth_call;
+              
+            } catch (error) {
+              console.error(error);
+            }
+        }
+        
+
+        async function eth_sendTransaction(contract_address,address_from,data){
+            try {
+              const eth_sendTransaction = await ethereum.request({
+                method: 'eth_sendTransaction',
+                params: [
+                  {
+                    "from": address_from,
+                    "to": contract_address,
+                    "data": data,
+                },"latest"]
+
+              });
+              
+             return eth_sendTransaction;
+              
+            } catch (error) {
+                    if (error.code == 4001 ) {
+                        alert('请在 MetaMask 确认,才能继续使用！');
+                        return;
+                    } else {
+                      alert('哦！NO, 好像发生了点意外。别着急, 我们很快修复它')
+                      return;
+                    }
+              console.error(error);
+            }
+        }
+        
+        async function switchEthereumChain(chainId){
+            try {
+              await ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: desiredNetwork_16 }],
+              });
+            } catch (switchError) {
+              // This error code indicates that the chain has not been added to MetaMask.
+              if (error.code === 4902) {
+                alert("Please add the corresponding node information first");
+                return;
+              }
+             
+            }  
+        }
+        
+    
+    
+    function hexToInt() {
+        
+          var hex = $("#hex").val();
+          console.log(hex);
+    }    
+        
+      
+     
+   
+    </script>
+</body>
+</html>
